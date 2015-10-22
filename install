@@ -9,17 +9,19 @@ apt-get install git -y
 apt-get install guake -y
 apt-get install chromium-browser -y
 
-echo "Linking bash configuration"
-ln -s ./.bashrc ~/.bashrc
+echo "Copying bash configuration"
+cp .bashrc ~/.bashrc
 source ~/.bashrc
 
-echo "Linking git configuration"
-ln -s ./.gitconfig ~/.gitconfig
+echo "Copying git configuration"
+cp .gitconfig ~/.gitconfig
 
-echo "Linking vim configuration"
-ln -s ./vimfiles/vimrc ~/.vim
-ln -s ./vimfiles/gvimrc ~/.vim
-ln -s ./vimfiles/colors ~/.vim
+mkdir ~/.vim
+
+echo "Copying vim configuration"
+cp vimfiles/vimrc ~/.vim/vimrc
+cp vimfiles/gvimrc ~/.vim/gvimrc
+cp -R vimfiles/colors ~/.vim/colors
 
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
@@ -37,7 +39,7 @@ echo
 
 mkdir ~/src
 
-echo "Installing powerline fonts"
+echo "Cloning and Installing powerline fonts"
 git clone https://github.com/powerline/fonts.git ~/src/fonts
 ~/src/fonts/install.sh
 
@@ -45,7 +47,7 @@ echo
 echo
 
 echo "Copying guake config"
-cp -R ./guake ~/.gconf/apps/
+cp -R guake ~/.gconf/apps/
 
 echo "Installing NodeJS"
 curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
