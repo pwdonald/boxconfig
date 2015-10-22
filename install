@@ -1,0 +1,52 @@
+#!/bin/sh
+echo "thedonofman configuration utility"
+echo
+echo
+
+apt-get update
+apt-get install vim -y
+apt-get install git -y
+apt-get install guake -y
+apt-get install chromium-browser -y
+
+echo "Linking bash configuration"
+ln -s ./.bashrc ~/.bashrc
+source ~/.bashrc
+
+echo "Linking git configuration"
+ln -s ./.gitconfig ~/.gitconfig
+
+echo "Linking vim configuration"
+ln -s ./vimfiles/vimrc ~/.vim
+ln -s ./vimfiles/gvimrc ~/.vim
+ln -s ./vimfiles/colors ~/.vim
+
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+echo "Cloning vim plugins"
+git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
+git clone https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
+git clone https://github.com/bling/vim-airline.git ~/.vim/bundle/vim-airline
+git clone https://github.com/tpope/vim-fugitive.git ~/.vim/bundle/vim-fugitive
+git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/vim-gitgutter
+git clone https://github.com/maksimr/vim-jsbeautify.git ~/.vim/bundle/vim-jsbeautify
+
+echo
+echo
+
+mkdir ~/src
+
+echo "Installing powerline fonts"
+git clone https://github.com/powerline/fonts.git ~/src/fonts
+~/src/fonts/install.sh
+
+echo
+echo
+
+echo "Copying guake config"
+cp -R ./guake ~/.gconf/apps/
+
+echo "Installing NodeJS"
+curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
+sudo apt-get install -y nodejs
