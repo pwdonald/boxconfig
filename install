@@ -1,24 +1,33 @@
 #!/bin/sh
-echo "thedonofman configuration utility"
-echo
-echo
+GREEN='\033[0;32m'
+BLUE='\033[0;34'
+NOCOLOR='\033[0m'
 
-apt-get update
+echo "${NOCOLOR}"
+echo "\n${GREEN}thenofman configuration utility\n\n"
+echo  "${BLUE}"
+
+apt-get -qq update
 apt-get install vim -y
 apt-get install git -y
 apt-get install guake -y
 apt-get install chromium-browser -y
 
-echo "Copying bash configuration"
+echo  "\n\n${GREEN}Copying bash configuration\n\n"
+echo  "${BLUE}"
+
 cp .bashrc ~/.bashrc
 source ~/.bashrc
 
-echo "Copying git configuration"
+echo  "Copying git configuration"
+echo  "${BLUE}"
 cp .gitconfig ~/.gitconfig
 
 mkdir ~/.vim
 
-echo "Copying vim configuration"
+echo  "\n\n${GREEN}Copying vim configuration\n\n"
+echo  "${BLUE}"
+
 cp vimfiles/vimrc ~/.vim/vimrc
 cp vimfiles/gvimrc ~/.vim/gvimrc
 cp -R vimfiles/colors ~/.vim/colors
@@ -26,29 +35,46 @@ cp -R vimfiles/colors ~/.vim/colors
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
-echo "Cloning vim plugins"
+echo  "\n\n${GREEN}Cloning vim plugins\n\n"
+echo  "${BLUE}"
+
 git clone https://github.com/kien/ctrlp.vim.git ~/.vim/bundle/ctrlp.vim
 git clone https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
 git clone https://github.com/bling/vim-airline.git ~/.vim/bundle/vim-airline
 git clone https://github.com/tpope/vim-fugitive.git ~/.vim/bundle/vim-fugitive
 git clone https://github.com/airblade/vim-gitgutter.git ~/.vim/bundle/vim-gitgutter
 git clone https://github.com/maksimr/vim-jsbeautify.git ~/.vim/bundle/vim-jsbeautify
-
-echo
-echo
+git -C ~/.vim/bundle/vim-jsbeautify submodule update --init --recursive
 
 mkdir ~/src
 
-echo "Cloning and Installing powerline fonts"
+echo  "\n\n${GREEN}Cloning and Installing powerline fonts\n\n"
+echo  "${BLUE}"
+
 git clone https://github.com/powerline/fonts.git ~/src/fonts
 ~/src/fonts/install.sh
 
-echo
-echo
+echo  "\n\n${GREEN}Copying guake config\n\n"
+echo  "${BLUE}"
 
-echo "Copying guake config"
 cp -R guake ~/.gconf/apps/
 
-echo "Installing NodeJS"
+echo  "\n\n${GREEN}Installing NodeJS\n\n"
+echo  "${BLUE}"
+
 curl -sL https://deb.nodesource.com/setup_0.12 | sudo -E bash -
 sudo apt-get install -y nodejs
+
+
+# set permissions on new directories since this has to be run with sudo
+
+echo  "\n\n${GREEN}Cleaning up permissions\n\n"
+echo  "${BLUE}"
+
+chown -R $SUDO_USER:$SUDO_USER ~/src
+chown -R $SUDO_USER:$SUDO_USER ~/.vim
+chown -R $SUDO_USER:$SUDO_USER ~/.gconf/apps/guake
+chown $SUDO_USER:$SUDO_USER ~/.bashrc
+
+
+echo  "${NOCOLOR}"
