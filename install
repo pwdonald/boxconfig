@@ -4,7 +4,7 @@ BLUE='\033[0;34'
 NOCOLOR='\033[0m'
 
 echo "${NOCOLOR}"
-echo "\n${GREEN}thenofman configuration utility\n\n"
+echo "\n${GREEN}thedonofman (pwdonald) configuration utility\n\n"
 echo  "${BLUE}"
 
 apt-get -qq update
